@@ -32,7 +32,9 @@ const Weather: React.FC = () => {
               {Math.round(openWeatherData.main.temp_max)}&deg;C
             </div>
           </Details>
-
+          {openWeatherData.weather[0]?.icon && (
+            <img src={`http://openweathermap.org/img/wn/${openWeatherData.weather[0]?.icon}.png`} alt="" />
+          )}
           <Details>
             <div>
               <Label>Humidity</Label>
