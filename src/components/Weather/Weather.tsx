@@ -1,5 +1,6 @@
 import React from "react"
 import { WeatherContext } from "../../providers/WeatherProvider"
+import Spinner from "../Spinner/Spinner"
 import { Wrapper } from "./Weather.styled"
 
 const Weather: React.FC = () => {
@@ -7,7 +8,7 @@ const Weather: React.FC = () => {
 
   if (openWeatherData) console.log(openWeatherData)
 
-  return <Wrapper>Weather</Wrapper>
+  return <Wrapper>{openWeatherData?.main ? <div>{openWeatherData?.main.temp}</div> : <Spinner />}</Wrapper>
 }
 
 export default Weather
