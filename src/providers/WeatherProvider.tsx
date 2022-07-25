@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from "react"
+import { createContext, useState, useEffect, ReactNode } from "react"
 import { API_URL, POLLING_INTERVAL } from "../constants/weather"
 
 interface WeatherItem {
@@ -47,6 +47,19 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
       temp: 20,
     },
   })
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        let long = coords.longitude
+        let lat = coords.latitude
+        console.log("coords", long, lat)
+      },
+      (error) => {
+        console.log("Could not find location", error)
+      },
+    )
+  }, [])
 
   return (
     <WeatherContext.Provider
