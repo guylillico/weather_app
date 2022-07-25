@@ -15,6 +15,15 @@ export const Wrapper = styled.div`
   border-radius: 4px;
 `
 
+export const LocationText = styled.span`
+  display: block;
+  font-size: 18px;
+  margin: 0 0 10px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ccc;
+  width: 100%;
+`
+
 export const TemperatureNow = styled.div`
   font-weight: 900;
   font-size: 80px;
