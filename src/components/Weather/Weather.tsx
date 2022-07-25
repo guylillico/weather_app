@@ -1,7 +1,7 @@
 import React from "react"
 import { WeatherContext } from "../../providers/WeatherProvider"
 import Spinner from "../Spinner/Spinner"
-import { Wrapper, TemperatureNow, TempUnit, LocationText, Description } from "./Weather.styled"
+import { Wrapper, TemperatureNow, TempUnit, LocationText, Description, Details } from "./Weather.styled"
 
 const Weather: React.FC = () => {
   const { openWeatherData } = React.useContext(WeatherContext)
@@ -18,6 +18,11 @@ const Weather: React.FC = () => {
             <TempUnit>&deg;C</TempUnit>
           </TemperatureNow>
           <Description>{openWeatherData?.weather[0].description}</Description>
+          <Details>
+            <div>{Math.round(openWeatherData.main.feels_like)}&deg;C</div>
+            <div>{Math.round(openWeatherData.main.temp_min)}&deg;C</div>
+            <div>{Math.round(openWeatherData.main.temp_max)}&deg;C</div>
+          </Details>
         </>
       ) : (
         <Spinner />

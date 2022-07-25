@@ -37,3 +37,10 @@ export const Description = styled.span`
   text-transform: capitalize;
   margin-bottom: 14px;
 `
+
+export const Details = styled.div`
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  width: 100%;
+`
