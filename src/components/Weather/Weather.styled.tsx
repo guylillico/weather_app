@@ -32,3 +32,8 @@ export const TemperatureNow = styled.div`
 export const TempUnit = styled.span`
   font-size: 20px;
 `
+
+export const Description = styled.span`
+  text-transform: capitalize;
+  margin-bottom: 14px;
+`
