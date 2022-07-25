@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, ReactNode } from "react"
+import { createContext, useState, useEffect, useCallback, ReactNode } from "react"
 import { API_URL, POLLING_INTERVAL } from "../constants/weather"
 
 interface WeatherItem {
@@ -48,17 +48,37 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     },
   })
 
+  const getOpenWeatherData = useCallback(async (long: number, lat: number) => {
+    console.log(long, lat)
+    const response = await fetch(`${API_URL}&lat=${lat}&lon=${long}`)
+    return await response.json()
+  }, [])
+
   useEffect(() => {
+    let pollInterval: number
+    console.log("here")
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         let long = coords.longitude
         let lat = coords.latitude
+
+        getOpenWeatherData(long, lat).then((res) => {
+          setOpenWeatherData(res)
+          pollInterval = window.setInterval(
+            () => getOpenWeatherData(long, lat).then((res) => console.log("res", res)),
+            5000,
+          )
+        })
         console.log("coords", long, lat)
       },
       (error) => {
         console.log("Could not find location", error)
       },
     )
+
+    return () => {
+      clearInterval(pollInterval)
+    }
   }, [])
 
   return (
