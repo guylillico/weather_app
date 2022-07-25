@@ -1,12 +1,11 @@
 import React from "react"
 import { WeatherContext } from "../../providers/WeatherProvider"
+import WeatherIcon from "../WeatherIcon/WeatherIcon"
 import Spinner from "../Spinner/Spinner"
 import { Wrapper, TemperatureNow, TempUnit, LocationText, Description, Details, Label } from "./Weather.styled"
 
 const Weather: React.FC = () => {
   const { openWeatherData } = React.useContext(WeatherContext)
-
-  if (openWeatherData) console.log(openWeatherData)
 
   return (
     <Wrapper>
@@ -33,7 +32,7 @@ const Weather: React.FC = () => {
             </div>
           </Details>
           {openWeatherData.weather[0]?.icon && (
-            <img src={`http://openweathermap.org/img/wn/${openWeatherData.weather[0]?.icon}.png`} alt="" />
+            <WeatherIcon icon={openWeatherData.weather[0].icon} alt={openWeatherData.weather[0].description} />
           )}
           <Details>
             <div>
