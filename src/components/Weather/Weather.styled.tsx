@@ -43,6 +43,7 @@ export const Details = styled.div`
   text-align: center;
   justify-content: space-around;
   width: 100%;
+  margin: 8px 0;
 
   div {
     display: flex;

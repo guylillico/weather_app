@@ -32,6 +32,21 @@ const Weather: React.FC = () => {
               {Math.round(openWeatherData.main.temp_max)}&deg;C
             </div>
           </Details>
+
+          <Details>
+            <div>
+              <Label>Humidity</Label>
+              {openWeatherData.main.humidity}%
+            </div>
+            <div>
+              <Label>Cloud cover</Label>
+              {openWeatherData?.clouds?.all}%
+            </div>
+            <div>
+              <Label>Wind speed</Label>
+              {openWeatherData?.wind?.speed} m/s
+            </div>
+          </Details>
         </>
       ) : (
         <Spinner />
