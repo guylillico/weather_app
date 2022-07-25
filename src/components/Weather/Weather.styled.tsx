@@ -14,3 +14,12 @@ export const Wrapper = styled.div`
   background-color: #fcfcfc;
   border-radius: 4px;
 `
+
+export const TemperatureNow = styled.div`
+  font-weight: 900;
+  font-size: 80px;
+`
+
+export const TempUnit = styled.span`
+  font-size: 20px;
+`
