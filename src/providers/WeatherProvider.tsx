@@ -11,28 +11,28 @@ interface WeatherItem {
 export interface WeatherData {
   main: {
     temp: number
-    feels_like?: number
-    temp_min?: number
-    temp_max?: number
-    pressure?: number
-    humidity?: number
+    feels_like: number
+    temp_min: number
+    temp_max: number
+    pressure: number
+    humidity: number
   }
-  wind?: {
+  wind: {
     speed: number
     deg: number
   }
-  clouds?: {
+  clouds: {
     all: number
   }
-  weather?: WeatherItem[]
-  sys?: {
+  weather: WeatherItem[]
+  sys: {
     type: number
     id: number
     country: string
     sunrise: number
     sunset: number
   }
-  name?: string
+  name: string
 }
 
 interface WeatherContextType {
@@ -42,34 +42,31 @@ interface WeatherContextType {
 export const WeatherContext = createContext<WeatherContextType>({})
 
 export const WeatherProvider = ({ children }: { children: ReactNode }) => {
-  const [openWeatherData, setOpenWeatherData] = useState<WeatherData>({
-    main: {
-      temp: 20,
-    },
-  })
+  const [openWeatherData, setOpenWeatherData] = useState<WeatherData>()
 
   const getOpenWeatherData = useCallback(async (long: number, lat: number) => {
-    console.log(long, lat)
     const response = await fetch(`${API_URL}&lat=${lat}&lon=${long}`)
     return await response.json()
   }, [])
 
   useEffect(() => {
     let pollInterval: number
-    console.log("here")
+    let ignore = false
+
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         let long = coords.longitude
         let lat = coords.latitude
 
         getOpenWeatherData(long, lat).then((res) => {
-          setOpenWeatherData(res)
-          pollInterval = window.setInterval(
-            () => getOpenWeatherData(long, lat).then((res) => console.log("res", res)),
-            5000,
-          )
+          if (!ignore) {
+            setOpenWeatherData(res)
+            pollInterval = window.setInterval(
+              () => getOpenWeatherData(long, lat).then((res) => console.log("res", res)),
+              POLLING_INTERVAL,
+            )
+          }
         })
-        console.log("coords", long, lat)
       },
       (error) => {
         console.log("Could not find location", error)
@@ -77,9 +74,10 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     )
 
     return () => {
-      clearInterval(pollInterval)
+      ignore = true
+      window.clearInterval(pollInterval)
     }
-  }, [])
+  }, [getOpenWeatherData])
 
   return (
     <WeatherContext.Provider
