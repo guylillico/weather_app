@@ -43,4 +43,13 @@ export const Details = styled.div`
   text-align: center;
   justify-content: space-around;
   width: 100%;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+`
+
+export const Label = styled.span`
+  font-size: 12px;
 `
