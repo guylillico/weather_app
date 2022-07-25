@@ -1,8 +1,13 @@
 import React from "react"
 import Weather from "./components/Weather/Weather"
+import { WeatherProvider } from "./providers/WeatherProvider"
 
 const App = () => {
-  return <Weather />
+  return (
+    <WeatherProvider>
+      <Weather />
+    </WeatherProvider>
+  )
 }
 
 export default App
